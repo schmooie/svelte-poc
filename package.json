@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "svelte-cli": "^1.2.1"
+  },
+  "scripts": {
+    "build": "node_modules/svelte-cli/bin.js compile -i src/Component.html -o Component.js -f iife"
+  }
+}

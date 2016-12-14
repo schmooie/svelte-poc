@@ -1,0 +1,68 @@
+<aside>
+  {{secondsElapsed}} seconds since <span class="time">{{hours}}:{{minutes}}</span>
+  <button on:click='toggleTimer()'>
+    {{#if interval}}
+      Pause
+    {{else}}
+      Play
+    {{/if}}
+  </button>
+</aside>
+
+<script>
+  export default {
+    data() {
+      return {
+        time: new Date(),
+        secondsElapsed: 0,
+      };
+    },
+
+    computed: {
+      hours: time => time.getHours(),
+      minutes: time => time.getMinutes(),
+      seconds: time => time.getSeconds()
+    },
+
+    onrender() {
+      this.startTimer();
+    },
+
+    methods: {
+      tick() {
+        this.set({ secondsElapsed: this.get('secondsElapsed') + 1 });
+      },
+
+      toggleTimer() {
+        var interval = this.get('interval');
+
+        if (interval) {
+          clearInterval(interval);
+          this.set({ interval: null });
+        } else {
+          this.startTimer();
+        }
+      },
+
+      startTimer() {
+        var interval = setInterval(this.tick.bind(this), 1000);
+
+        this.set({ interval });
+      }
+    }
+  }
+</script>
+
+<style>
+  .time {
+    font-weight: bold;
+  }
+  aside {
+    padding: 20px;
+  }
+  button {
+    background-color: #dd0707;
+    border-radius: 5px;
+    color: white;
+  }
+</style>
